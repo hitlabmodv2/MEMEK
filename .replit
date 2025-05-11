@@ -1,0 +1,42 @@
+
+run = "node index.js"
+hidden = [".config", "package-lock.json"]
+language = "nodejs"
+modules = ["nodejs-20"]
+
+[nix]
+channel = "stable-22_11"
+
+[packager]
+language = "nodejs"
+  [packager.features]
+  packageSearch = true
+  guessImports = true
+  enabledForHosting = false
+
+[unitTest]
+language = "nodejs"
+
+[deployment]
+run = ["node", "index.js"]
+deploymentTarget = "gce"
+
+[languages]
+
+[languages.javascript]
+pattern = "**/{*.js,*.jsx,*.ts,*.tsx}"
+
+[languages.javascript.languageServer]
+start = "typescript-language-server --stdio"
+
+[workflows]
+runButton = "Run"
+
+[[workflows.workflow]]
+name = "Run"
+author = 41881534
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node index.js"
